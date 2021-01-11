@@ -76,7 +76,7 @@ void leerCasos(string nombre_archivo, Lista_comunas* lista_comunas){
 	
 }	
 void formacion_hojas(Lista_comunas* comunas, nodo_arbol* hojas){ //problema de creacion de hojas
-  int tamaño=comunas->get_tamaño();
+  int tamano=comunas->get_tamano();
   Nodo_comuna* aux = comunas->getfirst();
   nodo_arbol* hoja;
   Comuna* comuna;
@@ -87,14 +87,15 @@ void formacion_hojas(Lista_comunas* comunas, nodo_arbol* hojas){ //problema de c
   int i=0;
   while (aux!=nullptr){
     comuna= aux->get_comuna();
+	cout<<comuna->get_latitud()<<" "<<i<<endl;
     longitud= comuna->get_longitud();
     latitud= comuna->get_latitud();
     cantidad_poblacion=comuna->get_cantidad_poblacion();
     numero_casos= comuna->get_numero_casos();
     hoja=new nodo_arbol(longitud,latitud,longitud,latitud,cantidad_poblacion,numero_casos);
-    hojas[i]=*hoja;
+	hojas[i++]=*hoja;
+	delete hoja;
     aux=aux->get_next();
-    i++;
   }
 }
 
@@ -106,9 +107,9 @@ int main() {
   leerComunas("comunas.txt", comunas);
   leerCasos("casos.txt",comunas);
   comunas->ordenar_latitud();
-  nodo_arbol* hojas= new nodo_arbol [comunas->get_tamaño()];
+  nodo_arbol* hojas= new nodo_arbol [comunas->get_tamano()];
   formacion_hojas(comunas, hojas);
-  dual_tree->insertar(hojas,comunas->get_tamaño());
+  dual_tree->insertar(hojas,comunas->get_tamano());
   cout<<"Son: "<<comunas->get_cantidad_poblacion()<<endl;
   cout<<"Me da: " <<dual_tree->get_raiz()->get_cantidad_poblacion()<<endl;
   cout<<dual_tree->get_raiz()->get_latitud1()<<endl;

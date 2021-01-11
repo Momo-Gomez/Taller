@@ -89,7 +89,7 @@ public:
     {
         return first;
     }
-    int get_tamaño(){
+    int get_tamano(){
         int tamano=0;
         Nodo_comuna *aux = first;
         while (aux != nullptr)

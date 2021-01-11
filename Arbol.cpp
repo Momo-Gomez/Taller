@@ -12,31 +12,31 @@ public:
     {
         raiz = nullptr;
     }
-    void insertar(nodo_arbol *aux, int tamaño)// recibe un arreglo de nodo_arbol ya formado en el main con las hojas
+    void insertar(nodo_arbol *aux, int tamano)// recibe un arreglo de nodo_arbol ya formado en el main con las hojas
     {
-        raiz = formar_arbol(aux,tamaño); // funcion recursiva para que solo quede un sector y este sea la raiz
+        raiz = formar_arbol(aux,tamano); // funcion recursiva para que solo quede un sector y este sea la raiz
     }
     nodo_arbol* get_raiz(){
       return raiz;
     }
 private:
-    nodo_arbol *formar_arbol(nodo_arbol *aux, int tamaño) // forma el arbol desde las hojas
+    nodo_arbol *formar_arbol(nodo_arbol *aux, int tamano) // forma el arbol desde las hojas
     {
         int k = -1; //contador de llenado nuevo arreglo;
         double longitud_mayor;
         double longitud_menor;
         double latitud_mayor;
         double latitud_menor;         
-        if (tamaño >1)           // condicion de salida el arreglo es de largo 1
+        if (tamano >1)           // condicion de salida el arreglo es de largo 1
         {
-            nodo_arbol *aux2 = new nodo_arbol[tamaño / 2];// forma un nuevo arreglo de mitad de tamaño asumiendo que las comunas son pares.
+            nodo_arbol *aux2 = new nodo_arbol[tamano / 2];// forma un nuevo arreglo de mitad de tamano asumiendo que las comunas son pares.
             nodo_arbol *nn;
-            for (int i = 0; i < tamaño; i++)
+            for (int i = 0; i < tamano; i++)
             {
                 if (!aux[i].get_usado())// 
                 {
                     nodo_arbol *menor= &aux[i+1];// caso base de menor distancia
-                    for (int j = 0; j < tamaño; j++)
+                    for (int j = 0; j < tamano; j++)
                     {
                         if (!aux[j].get_usado())
                         {
@@ -72,7 +72,7 @@ private:
                     aux2[++k] = *nn;// guarda los grupos creados en un nuevo arreglo
                 }
             }
-            aux = formar_arbol(aux2,tamaño/2); //llamada recursiva con el nuevo arreglo
+            aux = formar_arbol(aux2,tamano/2); //llamada recursiva con el nuevo arreglo
         }
         return aux;
     }
