@@ -23,13 +23,15 @@ void leerComunas(string nombre_archivo, Lista_comunas *lista_comunas){
 				infoInv.push_back(lineaTemp);
 			}
 			string comuna;
-			int latitud,longitud;
+			double latitud,longitud;
 			
-			istringstream(infoInv[0])>>comuna;
-			istringstream(infoInv[1])>>latitud;
-			istringstream(infoInv[2])>>longitud;
-			
-      lista_comunas->ingresar_comuna_txt(comuna,latitud,longitud);
+			comuna= infoInv[0];
+			istringstream(infoInv[1])>>longitud;
+			istringstream(infoInv[2])>>latitud;
+    
+      
+      
+      lista_comunas->ingresar_comuna_txt(comuna,longitud,latitud);
       
 			infoInv.clear();
 		}
@@ -41,7 +43,7 @@ void leerComunas(string nombre_archivo, Lista_comunas *lista_comunas){
 	
 }
 
-void leercasos(string nombre_archivo, Lista_comunas* lista_comunas){
+void leerCasos(string nombre_archivo, Lista_comunas* lista_comunas){
 	ifstream casos;
 	casos.open(nombre_archivo,ios::in);
 	if(casos.is_open()){
@@ -58,7 +60,7 @@ void leercasos(string nombre_archivo, Lista_comunas* lista_comunas){
 			string comuna;
 			int poblacion,casos;
 			
-			istringstream(infoInv[0])>>comuna;
+			comuna= infoInv[0];
 			istringstream(infoInv[1])>>poblacion;
 			istringstream(infoInv[2])>>casos;
 			
@@ -73,13 +75,50 @@ void leercasos(string nombre_archivo, Lista_comunas* lista_comunas){
 	}
 	
 }	
-	
-
+void formacion_hojas(Lista_comunas* comunas, nodo_arbol* hojas){ //problema de creacion de hojas
+  int tamaño=comunas->get_tamaño();
+  Nodo_comuna* aux = comunas->getfirst();
+  nodo_arbol* hoja;
+  Comuna* comuna;
+  double longitud;
+  double latitud;
+  int cantidad_poblacion;
+  int numero_casos;
+  int i=0;
+  while (aux!=nullptr){
+    comuna= aux->get_comuna();
+    longitud= comuna->get_longitud();
+    latitud= comuna->get_latitud();
+    cantidad_poblacion=comuna->get_cantidad_poblacion();
+    numero_casos= comuna->get_numero_casos();
+    hoja=new nodo_arbol(longitud,latitud,longitud,latitud,cantidad_poblacion,numero_casos);
+    hojas[i]=*hoja;
+    aux=aux->get_next();
+    i++;
+  }
+}
 
 
 int main() {
+
+  Lista_comunas* comunas = new Lista_comunas();/* ingresar(string nombre_comuna, double longitud, double latitud, int cantidad_poblacion, int numero_casos)*/
+  Arbol* dual_tree = new Arbol();/* el ingresar del arbol recibe un arreglo de nodo_arbol con las hojas que son las comunas o sea desde la lista de comuna hay que formar por cada comuna una hoja con los datos que pide*/
+  leerComunas("comunas.txt", comunas);
+  leerCasos("casos.txt",comunas);
+  comunas->ordenar_latitud();
+  nodo_arbol* hojas= new nodo_arbol [comunas->get_tamaño()];
+  formacion_hojas(comunas, hojas);
+  dual_tree->insertar(hojas,comunas->get_tamaño());
+  cout<<"Son: "<<comunas->get_cantidad_poblacion()<<endl;
+  cout<<"Me da: " <<dual_tree->get_raiz()->get_cantidad_poblacion()<<endl;
+  cout<<dual_tree->get_raiz()->get_latitud1()<<endl;
+  cout<<dual_tree->get_raiz()->get_latitud2()<<endl;
+  cout<<dual_tree->get_raiz()->get_longitud1()<<endl;
+  cout<<dual_tree->get_raiz()->get_longitud2()<<endl;
+  cout<<"Son: "<<comunas->get_numero_casos()<<endl;
+  cout<<"Me da: " <<dual_tree->get_raiz()->get_numero_casos()<<endl;
+  cout<<hojas[255].get_latitud1();
   
-  Lista_comunas comunas;/* ingresar(string nombre_comuna, double longitud, double latitud, int cantidad_poblacion, int numero_casos)*/
-  Arbol dual_tree;/* el ingresar del arbol recibe un arreglo de nodo_arbol con las hojas que son las comunas o sea desde la lista de comuna hay que formar por cada comuna una hoja con los datos que pide*/
   
+ 
 }

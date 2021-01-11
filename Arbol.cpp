@@ -12,42 +12,67 @@ public:
     {
         raiz = nullptr;
     }
-    void insertar(nodo_arbol *aux)// recibe un arreglo de nodo_arbol ya formado en el main con las hojas
+    void insertar(nodo_arbol *aux, int tamaño)// recibe un arreglo de nodo_arbol ya formado en el main con las hojas
     {
-        raiz = formar_arbol(aux); // funcion recursiva para que solo quede un sector y este sea la raiz
+        raiz = formar_arbol(aux,tamaño); // funcion recursiva para que solo quede un sector y este sea la raiz
+    }
+    nodo_arbol* get_raiz(){
+      return raiz;
     }
 private:
-    nodo_arbol *formar_arbol(nodo_arbol *aux) // forma el arbol desde las hojas
+    nodo_arbol *formar_arbol(nodo_arbol *aux, int tamaño) // forma el arbol desde las hojas
     {
-        int tamaño = sizeof(aux); //tamaño del arreglo de sectores agrupados;
-        int k = -1;               //contador de llenado nuevo arreglo;
-        if (tamaño > 1)           // condicion de salida el arreglo es de largo 1
+        int k = -1; //contador de llenado nuevo arreglo;
+        double longitud_mayor;
+        double longitud_menor;
+        double latitud_mayor;
+        double latitud_menor;         
+        if (tamaño >1)           // condicion de salida el arreglo es de largo 1
         {
             nodo_arbol *aux2 = new nodo_arbol[tamaño / 2];// forma un nuevo arreglo de mitad de tamaño asumiendo que las comunas son pares.
             nodo_arbol *nn;
-            for (int i = 0; i < tamaño - 1; i++)
+            for (int i = 0; i < tamaño; i++)
             {
                 if (!aux[i].get_usado())// 
                 {
-                    nodo_arbol *menor = &aux[i + 1]; // caso base de menor distancia
+                    nodo_arbol *menor= &aux[i+1];// caso base de menor distancia
                     for (int j = 0; j < tamaño; j++)
                     {
                         if (!aux[j].get_usado())
                         {
-                            if (es_menor(aux[i], aux[j], *menor))
-                            {
-                                menor = &aux[j];
+                            if(es_menor(aux[i], aux[j], *menor)){
+                              *menor = aux[j];
                             }
                         }
                     }
                     menor->set_usado(true); // cuando termia el ciclo ponemos al menor como usado;
-                    nn = new nodo_arbol(aux[i].get_longitud1(), menor->get_latitud1(), aux[i].get_longitud2(), menor->get_latitud2(), aux[i].get_cantidad_poblacion() + menor->get_cantidad_poblacion(), aux[i].get_numero_casos() + menor->get_numero_casos());
+                    if (aux[i].get_longitud1()<menor->get_longitud1()){//casos para seleccionar extremos
+                        longitud_menor=aux[i].get_longitud1();
+                    }else{
+                       longitud_menor= menor->get_longitud1();
+                       }
+                     if (aux[i].get_longitud2()>menor->get_longitud2()){
+                        longitud_mayor=aux[i].get_longitud2();
+                    }else{
+                       longitud_mayor= menor->get_longitud2();
+                       }
+                    if (aux[i].get_latitud1()>menor->get_latitud1()){
+                        latitud_mayor=aux[i].get_latitud1();
+                    }else{
+                      latitud_mayor= menor->get_latitud1();;
+                       }
+                    if (aux[i].get_latitud2()<menor->get_latitud2()){
+                        latitud_menor=aux[i].get_latitud2();
+                    }else{
+                      latitud_menor= menor->get_latitud2();;
+                       }
+                    nn = new nodo_arbol(longitud_menor,latitud_mayor,longitud_mayor,latitud_menor, aux[i].get_cantidad_poblacion() + menor->get_cantidad_poblacion(), aux[i].get_numero_casos() + menor->get_numero_casos());
                     nn->set_nodo_izquierdo(&aux[i]);
                     nn->set_nodo_derecho(menor);
                     aux2[++k] = *nn;// guarda los grupos creados en un nuevo arreglo
                 }
             }
-            aux = formar_arbol(aux2); //llamada recursiva con el nuevo arreglo
+            aux = formar_arbol(aux2,tamaño/2); //llamada recursiva con el nuevo arreglo
         }
         return aux;
     }
@@ -59,6 +84,7 @@ private:
         {
             distancia1 = sqrt(pow(aux.get_latitud1() - aux2.get_latitud1(),2) + pow(aux.get_longitud1() -aux2.get_latitud1(),2));
             distancia2 = sqrt(pow(aux.get_latitud1() - menor.get_latitud1(),2) + pow(aux.get_longitud1() - menor.get_longitud1(),2));
+            
         }
         else
         { /* se busca el punto medio de las latitides y longitudes para dejar solo un valor de latitud y longitud para cada nodo ingresado*/
@@ -77,5 +103,5 @@ private:
     }
     return false;
     }
-
+    
 };
