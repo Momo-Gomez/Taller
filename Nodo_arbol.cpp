@@ -1,13 +1,14 @@
 class nodo_arbol
 {
-    nodo_arbol *comuna1;
-    nodo_arbol *comuna2;
+    nodo_arbol *nodo_izquierdo;
+    nodo_arbol *nodo_derecho;
     double longitud1;
     double latitud1;
     double longitud2;
     double latitud2;
     int cantidad_poblacion;
     int numero_casos;
+    bool usado;
 
 public:
     nodo_arbol()
@@ -18,8 +19,9 @@ public:
         latitud2 = 0;
         cantidad_poblacion = 0;
         numero_casos = 0;
-        comuna1 = nullptr;
-        comuna2 = nullptr;
+        nodo_izquierdo = nullptr;
+        nodo_derecho = nullptr;
+        usado = false;
     }
     nodo_arbol(double longitud1, double latitud1, double longitud2, double latitud2, int cantidad_poblacion, int numero_casos)
     {
@@ -29,8 +31,9 @@ public:
         this->latitud2 = latitud2;
         this->cantidad_poblacion = cantidad_poblacion;
         this->numero_casos = numero_casos;
-        comuna1= nullptr;
-        comuna2=nullptr;
+        nodo_izquierdo = nullptr;
+        nodo_derecho = nullptr;
+        usado = false;
     }
     double get_longitud1()
     {
@@ -40,7 +43,7 @@ public:
     {
         return longitud2;
     }
-    double latitud1()
+    double get_latitud1()
     {
         return latitud1;
     }
@@ -56,12 +59,20 @@ public:
     {
         return numero_casos;
     }
-    void set_comuna1(nodo_arbol *comuna1)
+    bool get_usado()
     {
-        this->comuna1 = comuna1;
+        return usado;
     }
-    void set_comuna2(nodo_arbol *comuna2)
+    void set_nodo_izquierdo(nodo_arbol *nodo_izquierdo)
     {
-        this->comuna2 = comuna2;
+        this->nodo_izquierdo = nodo_izquierdo;
+    }
+    void set_nodo_derecho(nodo_arbol *nodo_derecho)
+    {
+        this->nodo_derecho = nodo_derecho;
+    }
+    void set_usado(bool usado)
+    {
+        this->usado = usado;
     }
 };
