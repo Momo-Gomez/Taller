@@ -126,19 +126,23 @@ int main()
 {
 	Lista_comunas *comunas = new Lista_comunas();
 	Arbol *arbol = new Arbol();
-	nodo_arbol *hojas;
+	nodo_arbol *hojas_arbol;
 	leerComunas("comunas.txt", comunas);
 	leerCasos("casos.txt", comunas);
 	comunas->ordenar_latitud();
 	int tamano = comunas->get_tamano();
-	hojas = new nodo_arbol[tamano];
-	formacion_hojas_arbol(comunas, hojas);
-	arbol->insertar(hojas, tamano);
+	hojas_arbol = new nodo_arbol[tamano];
+	formacion_hojas_arbol(comunas, hojas_arbol);
+	arbol->insertar_hojas(hojas_arbol, tamano);
 	casos_confirmado_nacional(arbol);
 	casos_confirmado_nivel(arbol);
 	casos_confirmados_puntos(arbol);
 	porcentaje_casos(arbol);
 	//###############inicio test#####################################
-	arbol->casos_confirmados_nivel(0);
+	arbol->casos_confirmados_nivel(3);
+	arbol->casos_confirmados_puntos(-68,-71,-17,-31);
+	arbol->porcentaje_casos_confirmados();
+	arbol->comunas_rango_porcentaje(60);
+	arbol->comunas_rango_porcentaje(5);
 	//#################fin test######################################
 }

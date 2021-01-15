@@ -81,7 +81,7 @@ public:
         Nodo_comuna *aux = first;
         while (aux != nullptr)
         {
-            cout << aux->get_comuna()->get_nombre_comuna()<<" "<<aux->get_comuna()->get_latitud()<<""<<aux->get_comuna()->get_longitud()<<endl;
+            cout << aux->get_comuna()->get_nombre_comuna()<<"\n"<<aux->get_comuna()->get_latitud()<<"\n"<<aux->get_comuna()->get_longitud()<<endl;
             aux=aux->get_next();
         }
     }

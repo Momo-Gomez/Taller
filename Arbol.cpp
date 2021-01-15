@@ -12,7 +12,7 @@ public:
     {
         raiz = nullptr;
     }
-    void insertar(nodo_arbol *arreglo, int tamano) // recibe un arreglo de nodo_arbol ya formado en el main con las hojas
+    void insertar_hojas(nodo_arbol *arreglo, int tamano) // recibe un arreglo de nodo_arbol ya formado en el main con las hojas
     {
         raiz = formar_arbol(arreglo, tamano, 1); // funcion recursiva para que solo quede un sector y este sea la raiz
     }
@@ -23,33 +23,96 @@ public:
     void casos_confirmados_nivel(int nivel)
     {
         cout << "Nivel numero " << nivel << endl;
-       casos_confirmados_nivel(raiz, nivel);
+        casos_confirmados_nivel(raiz, nivel);
     }
-    void casos_confirmados_puntos(){
-        
+    void casos_confirmados_puntos(double longitud_mayor, double longitud_menor, double latitud_mayor, double latitud_menor)
+    {
+        cout << "----------------   COMUNAS PERTENECIENTES AL CUADRANTE INGRESADO  ----------------" << endl;
+        casos_confirmados_puntos(raiz, longitud_mayor, longitud_menor, latitud_mayor, latitud_menor);
+        cout << "----------------------------------   FIN   ---------------------------------------" << endl;
+    }
+    void porcentaje_casos_confirmados(){
+        cout << "---------   PORCENTAJE DE CASOS CONFIRMADOS RESPECTO A LA POBLACION TOTAL  ---------" << endl;
+        porcentaje_casos_confirmados(raiz);
+        cout << "----------------------------------    FIN    --------------------------------------" << endl;
+    }
+    void comunas_rango_porcentaje(double porcentaje){
+        cout << "---------   COMUNAS EN RANGO DE PORCENTAJE RESPECTO A LA POBLACION TOTAL  ---------" << endl;
+        comunas_rango_porcentaje(raiz,porcentaje);
+        cout << "----------------------------------    FIN    --------------------------------------" << endl;
     }
 
 private:
-    void casos_confirmados_nivel(nodo_arbol *node, int nivel)
+    void comunas_rango_porcentaje(nodo_arbol* nodo,double porcentaje){ // aqui voy
+        if (nodo != nullptr)
+        {
+            if (nodo->get_nodo_derecho() == nullptr)
+            {
+                {   
+                    if (100*nodo->get_numero_casos()/nodo->get_cantidad_poblacion()<= porcentaje)
+                    {
+                        cout << "$-   "<<nodo->get_nombre() << endl;
+                    }
+                }
+            }
+            porcentaje_casos_confirmados(nodo->get_nodo_izquierdo());
+            porcentaje_casos_confirmados(nodo->get_nodo_derecho());
+        }
+    }
+    void porcentaje_casos_confirmados(nodo_arbol* nodo){
+         if (nodo != nullptr)
+        {
+            if (nodo->get_nodo_derecho() == nullptr)
+            {
+                {   
+                    cout<<"$-   "<<nodo->get_nombre()<< "    \t"<< (100*nodo->get_numero_casos()/nodo->get_cantidad_poblacion())<<"%"<<endl; 
+                }
+            }
+            porcentaje_casos_confirmados(nodo->get_nodo_izquierdo());
+            porcentaje_casos_confirmados(nodo->get_nodo_derecho());
+        }
+    }
+    void casos_confirmados_puntos(nodo_arbol *nodo, double longitud_mayor, double longitud_menor, double latitud_mayor, double latitud_menor)
     {
-        if (node != nullptr)
+        if (nodo != nullptr)
+        {
+            if (nodo->get_nodo_derecho() == nullptr)
+            {
+                {   
+                    if (latitud_mayor >= nodo->get_latitud1() && latitud_menor <= nodo->get_latitud1() && longitud_menor <= nodo->get_longitud1() && longitud_mayor >= nodo->get_longitud1())
+                    {
+                        cout << "$-   "<<nodo->get_nombre() << endl;
+                    }
+                }
+            }
+            casos_confirmados_puntos(nodo->get_nodo_izquierdo(), longitud_mayor, longitud_menor, latitud_mayor, latitud_menor);
+            casos_confirmados_puntos(nodo->get_nodo_derecho(), longitud_mayor, longitud_menor, latitud_mayor, latitud_menor);
+        }
+    }
+    void casos_confirmados_nivel(nodo_arbol *nodo, int nivel)
+    {
+        if (nodo != nullptr)
         {
             if (nivel == 0)
             {
-                cout << "Sector: " << node->get_nombre() << endl;
-                cout << "Cantidad de casos: " << node->get_numero_casos() << endl;
-                if (node->get_nodo_derecho() != nullptr)
+                cout << "---------------------------------" << endl;
+                cout << "Sector: " << nodo->get_nombre()<<"\t\t\t|" << endl;
+                cout << "Cantidad de casos: " << nodo->get_numero_casos()<<"\t|"  << endl;
+                cout << "---------------------------------"<< endl;
+                //MODIFICACION PROVISORIA
+                //cout<< nodo->get_latitud1()<<" " << nodo->get_latitud2()<<" " << nodo->get_longitud2()<< " "<<nodo->get_longitud1()<<endl;  
+                if (nodo->get_nodo_derecho() != nullptr)
                 {
-                    cout << "##########################################################################" << endl;
-                    cout << "Subsector 1: " << node->get_nodo_izquierdo()->get_nombre() << endl;
-                    cout << "Cantidad de casos: " << node->get_nodo_izquierdo()->get_numero_casos() << endl;
-                    cout << "Subsector 2: " << node->get_nodo_derecho()->get_nombre() << endl;
-                    cout << "Cantidad de casos: " << node->get_nodo_derecho()->get_numero_casos() << endl;
-                    cout << "##########################################################################" << endl;
+                    cout << "Subsector 1: " << nodo->get_nodo_izquierdo()->get_nombre()<<"\t\t|"  << endl;
+                    cout << "Cantidad de casos: " << nodo->get_nodo_izquierdo()->get_numero_casos()<<"\t|" << endl;
+                    cout << "Subsector 2: " << nodo->get_nodo_derecho()->get_nombre()<<"\t\t|"  << endl;
+                    cout << "Cantidad de casos: " << nodo->get_nodo_derecho()->get_numero_casos()<<"\t|" << endl;
+                    cout << "---------------------------------"<< endl;
+                    cout << "\n\n\n\n";
                 }
             }
-            casos_confirmados_nivel(node->get_nodo_izquierdo(), nivel - 1);
-            casos_confirmados_nivel(node->get_nodo_derecho(), nivel - 1);
+            casos_confirmados_nivel(nodo->get_nodo_izquierdo(), nivel - 1);
+            casos_confirmados_nivel(nodo->get_nodo_derecho(), nivel - 1);
         }
     }
     nodo_arbol *formar_arbol(nodo_arbol *arreglo, int tamano, int sector) // forma el arbol desde las hojas
