@@ -114,12 +114,89 @@ void casos_confirmado_nacional(Arbol *arbol)
 }
 void casos_confirmado_nivel(Arbol *arbol)
 { //RF2
+  cout<<"Ingrese nivel a revisar: ";
+  int nivel=0;
+  scanf("%i",&nivel);
+  if(nivel>=1 && nivel<=8){
+    arbol->casos_confirmados_nivel(nivel);
+  }
+  
+
 }
 void casos_confirmados_puntos(Arbol *arbol)
 { //RF3
+  cout<<"Ingrese longitud Menor: ";
+  int longitud1=0;
+  scanf("%i",&longitud1);
+  cout<<"Ingrese latitud Menor: ";
+  int latitud2=0;
+  scanf("%i",&latitud2);;
+  cout<<"Ingrese longitud Mayor: ";
+  int longitud2=0;
+  scanf("%i",&longitud2);
+  cout<<"Ingrese latitud Mayor: ";
+  int latitud1=0;
+  scanf("%i",&latitud1);
+  arbol->casos_confirmados_puntos(longitud2,longitud1,latitud1, latitud2);
+  
+
 }
 void porcentaje_casos(Arbol *arbol)
-{ //RF4
+{ //RF4.1
+  arbol->porcentaje_casos_confirmados();
+}
+void comunas_porcentaje_casos(Arbol *arbol){
+  cout<<"Ingrese porcentaje a buscar: ";
+  int porcentaje=0;
+  scanf("%i",&porcentaje);
+  if(porcentaje>=0 && porcentaje<=100){
+    arbol->comunas_rango_porcentaje(porcentaje);
+  }
+}
+void menu(Arbol* arbol){
+  cout<<"****************MENÚ****************\n"<<endl;
+  cout<<"1) Casos confirmando a nivel nacional."<<endl;
+  cout<<"2) Casos condirmado en un nivel."<<endl;
+  cout<<"3) Casos confirmando entre puntos"<<endl;
+  cout<<"4) Porcentaje de casos confirmados"<<endl;
+  cout<<"5) Comunas en rango de porcentaje"<<endl;
+  cout<<"6) SALIR"<<endl;
+  cout<<"\nRespueta: ";
+  int resp=0;
+  scanf("%i",&resp);
+
+  while(resp!=6){
+    if (resp==1){
+      casos_confirmado_nacional(arbol);
+    }
+    else if (resp==2){
+      casos_confirmado_nivel(arbol);
+    }
+    else if (resp==3){
+      casos_confirmados_puntos(arbol);
+    }
+    else if(resp==4){
+      porcentaje_casos(arbol);
+    }
+    else if (resp==5){
+      comunas_porcentaje_casos(arbol);
+    }
+
+    cout<<"\n\n\n****************MENÚ****************\n"<<endl;
+    cout<<"1) Casos confirmando a nivel nacional."<<endl;
+    cout<<"2) Casos condirmado en un nivel."<<endl;
+    cout<<"3) Casos confirmando entre puntos"<<endl;
+    cout<<"4) Porcentaje de casos confirmados"<<endl;
+    cout<<"5) Comunas en rando de porcentaje"<<endl;
+    cout<<"6) SALIR"<<endl;
+    cout<<"\nRespueta: ";
+    resp=0;
+    scanf("%i",&resp);
+  }
+  if (resp==6){
+    cout<<"\n\n\n++++++++++FIN DEL PROGRAMA++++++++++"<<endl;
+  }
+
 }
 
 int main()
@@ -134,15 +211,8 @@ int main()
 	hojas_arbol = new nodo_arbol[tamano];
 	formacion_hojas_arbol(comunas, hojas_arbol);
 	arbol->insertar_hojas(hojas_arbol, tamano);
-	casos_confirmado_nacional(arbol);
-	casos_confirmado_nivel(arbol);
-	casos_confirmados_puntos(arbol);
-	porcentaje_casos(arbol);
+  menu(arbol);
 	//###############inicio test#####################################
-	arbol->casos_confirmados_nivel(3);
-	arbol->casos_confirmados_puntos(-68,-71,-17,-31);
-	arbol->porcentaje_casos_confirmados();
-	arbol->comunas_rango_porcentaje(60);
-	arbol->comunas_rango_porcentaje(5);
+	arbol->comunas_rango_porcentaje(5);//RF4.2
 	//#################fin test######################################
 }

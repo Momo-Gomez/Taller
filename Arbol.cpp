@@ -34,7 +34,7 @@ public:
     void porcentaje_casos_confirmados(){
         cout << "---------   PORCENTAJE DE CASOS CONFIRMADOS RESPECTO A LA POBLACION TOTAL  ---------" << endl;
         porcentaje_casos_confirmados(raiz);
-        cout << "----------------------------------    FIN    --------------------------------------" << endl;
+        cout << "----------------------------------    FIN    --------------------------------------" << endl<<endl;
     }
     void comunas_rango_porcentaje(double porcentaje){
         cout << "---------   COMUNAS EN RANGO DE PORCENTAJE RESPECTO A LA POBLACION TOTAL  ---------" << endl;
@@ -49,14 +49,15 @@ private:
             if (nodo->get_nodo_derecho() == nullptr)
             {
                 {   
-                    if (100*nodo->get_numero_casos()/nodo->get_cantidad_poblacion()<= porcentaje)
+
+                    if ((100*nodo->get_numero_casos()/nodo->get_cantidad_poblacion())<= porcentaje)
                     {
                         cout << "$-   "<<nodo->get_nombre() << endl;
                     }
                 }
             }
-            porcentaje_casos_confirmados(nodo->get_nodo_izquierdo());
-            porcentaje_casos_confirmados(nodo->get_nodo_derecho());
+            comunas_rango_porcentaje(nodo->get_nodo_izquierdo(),porcentaje);
+            comunas_rango_porcentaje(nodo->get_nodo_derecho(),porcentaje);
         }
     }
     void porcentaje_casos_confirmados(nodo_arbol* nodo){
@@ -96,17 +97,17 @@ private:
             if (nivel == 0)
             {
                 cout << "---------------------------------" << endl;
-                cout << "Sector: " << nodo->get_nombre()<<"\t\t\t|" << endl;
-                cout << "Cantidad de casos: " << nodo->get_numero_casos()<<"\t|"  << endl;
+                cout << "Sector: " << nodo->get_nombre()<<"\t\t\t\t\t\t|" << endl;
+                cout << "Cantidad de casos: " << nodo->get_numero_casos()<<"\t\t|"  << endl;
                 cout << "---------------------------------"<< endl;
                 //MODIFICACION PROVISORIA
                 //cout<< nodo->get_latitud1()<<" " << nodo->get_latitud2()<<" " << nodo->get_longitud2()<< " "<<nodo->get_longitud1()<<endl;  
                 if (nodo->get_nodo_derecho() != nullptr)
                 {
-                    cout << "Subsector 1: " << nodo->get_nodo_izquierdo()->get_nombre()<<"\t\t|"  << endl;
-                    cout << "Cantidad de casos: " << nodo->get_nodo_izquierdo()->get_numero_casos()<<"\t|" << endl;
-                    cout << "Subsector 2: " << nodo->get_nodo_derecho()->get_nombre()<<"\t\t|"  << endl;
-                    cout << "Cantidad de casos: " << nodo->get_nodo_derecho()->get_numero_casos()<<"\t|" << endl;
+                    cout << "Subsector 1: " << nodo->get_nodo_izquierdo()->get_nombre()<<"\t\t\t\t|"  << endl;
+                    cout << "Cantidad de casos: " << nodo->get_nodo_izquierdo()->get_numero_casos()<<"\t\t|" << endl;
+                    cout << "Subsector 2: " << nodo->get_nodo_derecho()->get_nombre()<<"\t\t\t\t|"  << endl;
+                    cout << "Cantidad de casos: " << nodo->get_nodo_derecho()->get_numero_casos()<<"\t\t|" << endl;
                     cout << "---------------------------------"<< endl;
                     cout << "\n\n\n\n";
                 }
