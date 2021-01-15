@@ -31,42 +31,47 @@ public:
         casos_confirmados_puntos(raiz, longitud_mayor, longitud_menor, latitud_mayor, latitud_menor);
         cout << "----------------------------------   FIN   ---------------------------------------" << endl;
     }
-    void porcentaje_casos_confirmados(){
+    void porcentaje_casos_confirmados()
+    {
         cout << "---------   PORCENTAJE DE CASOS CONFIRMADOS RESPECTO A LA POBLACION TOTAL  ---------" << endl;
         porcentaje_casos_confirmados(raiz);
-        cout << "----------------------------------    FIN    --------------------------------------" << endl<<endl;
+        cout << "----------------------------------    FIN    --------------------------------------" << endl
+             << endl;
     }
-    void comunas_rango_porcentaje(double porcentaje){
+    void comunas_rango_porcentaje(double porcentaje)
+    {
         cout << "---------   COMUNAS EN RANGO DE PORCENTAJE RESPECTO A LA POBLACION TOTAL  ---------" << endl;
-        comunas_rango_porcentaje(raiz,porcentaje);
+        comunas_rango_porcentaje(raiz, porcentaje);
         cout << "----------------------------------    FIN    --------------------------------------" << endl;
     }
 
 private:
-    void comunas_rango_porcentaje(nodo_arbol* nodo,double porcentaje){ // aqui voy
+    void comunas_rango_porcentaje(nodo_arbol *nodo, double porcentaje)
+    { // aqui voy
         if (nodo != nullptr)
         {
             if (nodo->get_nodo_derecho() == nullptr)
             {
-                {   
+                {
 
-                    if ((100*nodo->get_numero_casos()/nodo->get_cantidad_poblacion())<= porcentaje)
+                    if ((100 * nodo->get_numero_casos() / nodo->get_cantidad_poblacion()) <= porcentaje)
                     {
-                        cout << "$-   "<<nodo->get_nombre() << endl;
+                        cout << "$-   " << nodo->get_nombre() << endl;
                     }
                 }
             }
-            comunas_rango_porcentaje(nodo->get_nodo_izquierdo(),porcentaje);
-            comunas_rango_porcentaje(nodo->get_nodo_derecho(),porcentaje);
+            comunas_rango_porcentaje(nodo->get_nodo_izquierdo(), porcentaje);
+            comunas_rango_porcentaje(nodo->get_nodo_derecho(), porcentaje);
         }
     }
-    void porcentaje_casos_confirmados(nodo_arbol* nodo){
-         if (nodo != nullptr)
+    void porcentaje_casos_confirmados(nodo_arbol *nodo)
+    {
+        if (nodo != nullptr)
         {
             if (nodo->get_nodo_derecho() == nullptr)
             {
-                {   
-                    cout<<"$-   "<<nodo->get_nombre()<< "    \t"<< (100*nodo->get_numero_casos()/nodo->get_cantidad_poblacion())<<"%"<<endl; 
+                {
+                    cout << "$-   " << nodo->get_nombre() << "    \t" << (100 * nodo->get_numero_casos() / nodo->get_cantidad_poblacion()) << "%" << endl;
                 }
             }
             porcentaje_casos_confirmados(nodo->get_nodo_izquierdo());
@@ -79,10 +84,10 @@ private:
         {
             if (nodo->get_nodo_derecho() == nullptr)
             {
-                {   
+                {
                     if (latitud_mayor >= nodo->get_latitud1() && latitud_menor <= nodo->get_latitud1() && longitud_menor <= nodo->get_longitud1() && longitud_mayor >= nodo->get_longitud1())
                     {
-                        cout << "$-   "<<nodo->get_nombre() << endl;
+                        cout << "$-   " << nodo->get_nombre() << endl;
                     }
                 }
             }
@@ -97,18 +102,18 @@ private:
             if (nivel == 0)
             {
                 cout << "---------------------------------" << endl;
-                cout << "Sector: " << nodo->get_nombre()<<"\t\t\t\t\t\t|" << endl;
-                cout << "Cantidad de casos: " << nodo->get_numero_casos()<<"\t\t|"  << endl;
-                cout << "---------------------------------"<< endl;
+                cout << "Sector: " << nodo->get_nombre() << "\t\t\t\t\t\t|" << endl;
+                cout << "Cantidad de casos: " << nodo->get_numero_casos() << "\t\t|" << endl;
+                cout << "---------------------------------" << endl;
                 //MODIFICACION PROVISORIA
-                //cout<< nodo->get_latitud1()<<" " << nodo->get_latitud2()<<" " << nodo->get_longitud2()<< " "<<nodo->get_longitud1()<<endl;  
+                //cout<< nodo->get_latitud1()<<" " << nodo->get_latitud2()<<" " << nodo->get_longitud2()<< " "<<nodo->get_longitud1()<<endl;
                 if (nodo->get_nodo_derecho() != nullptr)
                 {
-                    cout << "Subsector 1: " << nodo->get_nodo_izquierdo()->get_nombre()<<"\t\t\t\t|"  << endl;
-                    cout << "Cantidad de casos: " << nodo->get_nodo_izquierdo()->get_numero_casos()<<"\t\t|" << endl;
-                    cout << "Subsector 2: " << nodo->get_nodo_derecho()->get_nombre()<<"\t\t\t\t|"  << endl;
-                    cout << "Cantidad de casos: " << nodo->get_nodo_derecho()->get_numero_casos()<<"\t\t|" << endl;
-                    cout << "---------------------------------"<< endl;
+                    cout << "Subsector 1: " << nodo->get_nodo_izquierdo()->get_nombre() << "\t\t\t\t|" << endl;
+                    cout << "Cantidad de casos: " << nodo->get_nodo_izquierdo()->get_numero_casos() << "\t\t|" << endl;
+                    cout << "Subsector 2: " << nodo->get_nodo_derecho()->get_nombre() << "\t\t\t\t|" << endl;
+                    cout << "Cantidad de casos: " << nodo->get_nodo_derecho()->get_numero_casos() << "\t\t|" << endl;
+                    cout << "---------------------------------" << endl;
                     cout << "\n\n\n\n";
                 }
             }

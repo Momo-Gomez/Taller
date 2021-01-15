@@ -21,8 +21,9 @@ public:
     {
         this->next = next;
     }
-    void set_comuna(Comuna* comuna){
-        this->comuna= comuna;
+    void set_comuna(Comuna *comuna)
+    {
+        this->comuna = comuna;
     }
     Comuna *get_comuna()
     {

@@ -37,7 +37,7 @@ public:
         nodo_izquierdo = nullptr;
         nodo_derecho = nullptr;
         usado = false;
-        this->nombre=nombre;
+        this->nombre = nombre;
     }
     double get_longitud1()
     {
@@ -79,13 +79,16 @@ public:
     {
         this->usado = usado;
     }
-     nodo_arbol* get_nodo_izquierdo(){
+    nodo_arbol *get_nodo_izquierdo()
+    {
         return nodo_izquierdo;
     }
-    nodo_arbol* get_nodo_derecho(){
+    nodo_arbol *get_nodo_derecho()
+    {
         return nodo_derecho;
     }
-    string get_nombre(){
+    string get_nombre()
+    {
         return nombre;
     }
 };

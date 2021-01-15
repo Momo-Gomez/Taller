@@ -21,16 +21,19 @@ public:
         }
         first = nn;
     }
-    void ingresar_casos_txt ( string nombre_comuna, int cantidad_poblacion, int numero_casos){
-        Nodo_comuna* aux= first;
-        while (aux!=nullptr){
-            Comuna* comuna= aux->get_comuna();
-            if (comuna->get_nombre_comuna()== nombre_comuna){
-              comuna->set_cantidad_poblacion(cantidad_poblacion);
-              comuna->set_numero_casos(numero_casos);
-              break;
+    void ingresar_casos_txt(string nombre_comuna, int cantidad_poblacion, int numero_casos)
+    {
+        Nodo_comuna *aux = first;
+        while (aux != nullptr)
+        {
+            Comuna *comuna = aux->get_comuna();
+            if (comuna->get_nombre_comuna() == nombre_comuna)
+            {
+                comuna->set_cantidad_poblacion(cantidad_poblacion);
+                comuna->set_numero_casos(numero_casos);
+                break;
             }
-            aux=aux->get_next();
+            aux = aux->get_next();
         }
     }
     void ordenar_latitud() // supuestamente ordena de mayor a menor, mayor latitud es mas al norte (creo)
@@ -81,41 +84,46 @@ public:
         Nodo_comuna *aux = first;
         while (aux != nullptr)
         {
-            cout << aux->get_comuna()->get_nombre_comuna()<<"\n"<<aux->get_comuna()->get_latitud()<<"\n"<<aux->get_comuna()->get_longitud()<<endl;
-            aux=aux->get_next();
+            cout << aux->get_comuna()->get_nombre_comuna() << "\n"
+                 << aux->get_comuna()->get_latitud() << "\n"
+                 << aux->get_comuna()->get_longitud() << endl;
+            aux = aux->get_next();
         }
     }
     Nodo_comuna *getfirst()
     {
         return first;
     }
-    int get_tamano(){
-        int tamano=0;
+    int get_tamano()
+    {
+        int tamano = 0;
         Nodo_comuna *aux = first;
         while (aux != nullptr)
         {
             tamano++;
-            aux=aux->get_next();
+            aux = aux->get_next();
         }
         return tamano;
     }
-    int get_cantidad_poblacion(){
-      int tamano=0;
+    int get_cantidad_poblacion()
+    {
+        int tamano = 0;
         Nodo_comuna *aux = first;
         while (aux != nullptr)
         {
-            tamano+=aux->get_comuna()->get_cantidad_poblacion();
-            aux=aux->get_next();
+            tamano += aux->get_comuna()->get_cantidad_poblacion();
+            aux = aux->get_next();
         }
         return tamano;
     }
-    int get_numero_casos(){
-      int tamano=0;
+    int get_numero_casos()
+    {
+        int tamano = 0;
         Nodo_comuna *aux = first;
         while (aux != nullptr)
         {
-            tamano+=aux->get_comuna()->get_numero_casos();
-            aux=aux->get_next();
+            tamano += aux->get_comuna()->get_numero_casos();
+            aux = aux->get_next();
         }
         return tamano;
     }

@@ -45,10 +45,12 @@ public:
     {
         return numero_casos;
     }
-    void set_cantidad_poblacion(int cantidad_poblacion){
-      this->cantidad_poblacion=cantidad_poblacion;
+    void set_cantidad_poblacion(int cantidad_poblacion)
+    {
+        this->cantidad_poblacion = cantidad_poblacion;
     }
-    void set_numero_casos (int numero_casos){
-      this->numero_casos=numero_casos;
+    void set_numero_casos(int numero_casos)
+    {
+        this->numero_casos = numero_casos;
     }
 };
