@@ -17,13 +17,13 @@ public:
         cantidad_poblacion = -1;
         numero_casos = -1;
     }
-    Comuna(string nombre_comuna, double longitud, double latitud, int cantidad_poblacion, int numero_casos)
+    Comuna(string nombre_comuna, double longitud, double latitud)
     {
         this->nombre_comuna = nombre_comuna;
         this->longitud = longitud;
         this->latitud = latitud;
-        this->cantidad_poblacion = cantidad_poblacion;
-        this->numero_casos = numero_casos;
+        this->cantidad_poblacion = -1;
+        this->numero_casos = -1;
     }
     string get_nombre_comuna()
     {
@@ -44,5 +44,11 @@ public:
     int get_numero_casos()
     {
         return numero_casos;
+    }
+    void set_cantidad_poblacion(int cantidad_poblacion){
+      this->cantidad_poblacion=cantidad_poblacion;
+    }
+    void set_numero_casos (int numero_casos){
+      this->numero_casos=numero_casos;
     }
 };
