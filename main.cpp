@@ -80,6 +80,7 @@ void formacion_hojas(Lista_comunas* comunas, nodo_arbol* hojas){ //problema de c
   Nodo_comuna* aux = comunas->getfirst();
   nodo_arbol* hoja;
   Comuna* comuna;
+  string nombre;
   double longitud;
   double latitud;
   int cantidad_poblacion;
@@ -87,11 +88,12 @@ void formacion_hojas(Lista_comunas* comunas, nodo_arbol* hojas){ //problema de c
   int i=0;
   while (aux!=nullptr){
     comuna= aux->get_comuna();
+	nombre= comuna->get_nombre_comuna();
     longitud= comuna->get_longitud();
     latitud= comuna->get_latitud();
     cantidad_poblacion=comuna->get_cantidad_poblacion();
     numero_casos= comuna->get_numero_casos();
-    hoja=new nodo_arbol(longitud,latitud,longitud,latitud,cantidad_poblacion,numero_casos);
+    hoja=new nodo_arbol(nombre,longitud,latitud,longitud,latitud,cantidad_poblacion,numero_casos);
 	hojas[i++]=*hoja;
     aux=aux->get_next();
   }
@@ -116,4 +118,5 @@ int main() {
   cout<<dual_tree->get_raiz()->get_longitud2()<<endl;
   cout<<"Son: "<<comunas->get_numero_casos()<<endl;
   cout<<"Me da: " <<dual_tree->get_raiz()->get_numero_casos()<<endl;
+  dual_tree->CasosConfirmados(7);
 }
