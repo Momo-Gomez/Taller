@@ -16,37 +16,40 @@ public:
     {
         raiz = formar_arbol(arreglo, tamano, 1); // funcion recursiva para que solo quede un sector y este sea la raiz
     }
-    nodo_arbol *get_raiz()
+    string casos_confirmados_nacional()
     {
-        return raiz;
+        return to_string(raiz->get_numero_casos());
     }
-    void CasosConfirmados(int nivel)
+    void casos_confirmados_nivel(int nivel)
     {
-        cout <<"Nivel numero "<<nivel<< endl;
-        mostrar(raiz, nivel);
+        cout << "Nivel numero " << nivel << endl;
+       casos_confirmados_nivel(raiz, nivel);
+    }
+    void casos_confirmados_puntos(){
+        
     }
 
 private:
-    void mostrar(nodo_arbol *node, int nivel)
+    void casos_confirmados_nivel(nodo_arbol *node, int nivel)
     {
         if (node != nullptr)
         {
             if (nivel == 0)
             {
-                cout << "Sector: "<<node->get_nombre() << endl;
-                cout<<"Cantidad de casos: "<< node->get_numero_casos()<<endl;
-                if(node->get_nodo_derecho()!=nullptr){
-                    cout<<"##########################################################################"<<endl;
-                    cout << "Subsector 1: "<<node->get_nodo_izquierdo()->get_nombre() << endl;
-                    cout<<"Cantidad de casos: "<< node->get_nodo_izquierdo()->get_numero_casos()<<endl;
-                    cout << "Subsector 2: "<<node->get_nodo_derecho()->get_nombre() << endl;
-                    cout<<"Cantidad de casos: "<< node->get_nodo_derecho()->get_numero_casos()<<endl;
-                    cout<<"##########################################################################"<<endl;
+                cout << "Sector: " << node->get_nombre() << endl;
+                cout << "Cantidad de casos: " << node->get_numero_casos() << endl;
+                if (node->get_nodo_derecho() != nullptr)
+                {
+                    cout << "##########################################################################" << endl;
+                    cout << "Subsector 1: " << node->get_nodo_izquierdo()->get_nombre() << endl;
+                    cout << "Cantidad de casos: " << node->get_nodo_izquierdo()->get_numero_casos() << endl;
+                    cout << "Subsector 2: " << node->get_nodo_derecho()->get_nombre() << endl;
+                    cout << "Cantidad de casos: " << node->get_nodo_derecho()->get_numero_casos() << endl;
+                    cout << "##########################################################################" << endl;
                 }
-
             }
-            mostrar(node->get_nodo_izquierdo(), nivel - 1);
-            mostrar(node->get_nodo_derecho(), nivel - 1);
+            casos_confirmados_nivel(node->get_nodo_izquierdo(), nivel - 1);
+            casos_confirmados_nivel(node->get_nodo_derecho(), nivel - 1);
         }
     }
     nodo_arbol *formar_arbol(nodo_arbol *arreglo, int tamano, int sector) // forma el arbol desde las hojas
@@ -67,7 +70,7 @@ private:
                 nodo_arbol *menor_distancia;
                 if (!arreglo[i].get_usado())
                 {
-                    menor_distancia = &arreglo[i + 1]; // caso base de menor distancia
+                    menor_distancia = nullptr; // caso base de menor distancia
                     for (int j = i + 1; j < tamano; j++)
                     {
                         if (!arreglo[j].get_usado())
@@ -79,39 +82,8 @@ private:
                         }
                     }
                     menor_distancia->set_usado(true); // cuando termia el ciclo ponemos al menor como usado;
-                    if (arreglo[i].get_longitud1() < menor_distancia->get_longitud1())
-                    { //casos para seleccionar extremos
-                        longitud_menor = arreglo[i].get_longitud1();
-                    }
-                    else
-                    {
-                        longitud_menor = menor_distancia->get_longitud1();
-                    }
-                    if (arreglo[i].get_longitud2() > menor_distancia->get_longitud2())
-                    {
-                        longitud_mayor = arreglo[i].get_longitud2();
-                    }
-                    else
-                    {
-                        longitud_mayor = menor_distancia->get_longitud2();
-                    }
-                    if (arreglo[i].get_latitud1() > menor_distancia->get_latitud1())
-                    {
-                        latitud_mayor = arreglo[i].get_latitud1();
-                    }
-                    else
-                    {
-                        latitud_mayor = menor_distancia->get_latitud1();
-                        ;
-                    }
-                    if (arreglo[i].get_latitud2() < menor_distancia->get_latitud2())
-                    {
-                        latitud_menor = arreglo[i].get_latitud2();
-                    }
-                    else
-                    {
-                        latitud_menor = menor_distancia->get_latitud2();
-                    }
+                    definicion_extremos_longitud(&arreglo[i], menor_distancia, &longitud_menor, &longitud_mayor);
+                    definicion_extremos_latitud(&arreglo[i], menor_distancia, &latitud_menor, &latitud_mayor);
                     nuevo_nodo = new nodo_arbol(to_string(sector++), longitud_menor, latitud_mayor, longitud_mayor, latitud_menor, arreglo[i].get_cantidad_poblacion() + menor_distancia->get_cantidad_poblacion(), arreglo[i].get_numero_casos() + menor_distancia->get_numero_casos());
                     nuevo_nodo->set_nodo_izquierdo(&arreglo[i]);
                     nuevo_nodo->set_nodo_derecho(menor_distancia);
@@ -121,6 +93,44 @@ private:
             arreglo = formar_arbol(nuevo_arreglo, tamano / 2, sector); //llamada recursiva con el nuevo arreglo
         }
         return arreglo;
+    }
+    void definicion_extremos_longitud(nodo_arbol *arreglo, nodo_arbol *menor_distancia, double *longitud_menor, double *longitud_mayor)
+    {
+        if (arreglo->get_longitud1() < menor_distancia->get_longitud1())
+        { //casos para seleccionar extremos
+            *longitud_menor = arreglo->get_longitud1();
+        }
+        else
+        {
+            *longitud_menor = menor_distancia->get_longitud1();
+        }
+        if (arreglo->get_longitud2() > menor_distancia->get_longitud2())
+        {
+            *longitud_mayor = arreglo->get_longitud2();
+        }
+        else
+        {
+            *longitud_mayor = menor_distancia->get_longitud2();
+        }
+    }
+    void definicion_extremos_latitud(nodo_arbol *arreglo, nodo_arbol *menor_distancia, double *latitud_menor, double *latitud_mayor)
+    {
+        if (arreglo->get_latitud1() > menor_distancia->get_latitud1())
+        {
+            *latitud_mayor = arreglo->get_latitud1();
+        }
+        else
+        {
+            *latitud_mayor = menor_distancia->get_latitud1();
+        }
+        if (arreglo->get_latitud2() < menor_distancia->get_latitud2())
+        {
+            *latitud_menor = arreglo->get_latitud2();
+        }
+        else
+        {
+            *latitud_menor = menor_distancia->get_latitud2();
+        }
     }
     bool es_menor(nodo_arbol *nodo_base, nodo_arbol *nodo_comparacion, double *menor_distancia_encontrada)
     {
