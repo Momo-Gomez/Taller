@@ -98,18 +98,31 @@ void formacion_hojas(Lista_comunas* comunas, nodo_arbol* hojas){ //problema de c
     aux=aux->get_next();
   }
 }
+void casos_confirmado_nacional(Arbol* dual_tree){ //RF1
+   cout<<"Casos confirmado a nivel nacional: " <<dual_tree->get_raiz()->get_numero_casos()<<endl;
+}
+void casos_confirmado_nivel(Arbol* dual_tree){//RF2
+  
+}
+void casos_confirmados_puntos(Arbol* dual_tree){//RF3
 
+}
+void porcentaje_casos (Arbol* dual_tree){//RF4
+
+}
 
 int main() {
-  Lista_comunas* comunas = new Lista_comunas();/* ingresar(string nombre_comuna, double longitud, double latitud, int cantidad_poblacion, int numero_casos)*/
-  Arbol* dual_tree = new Arbol();/* el ingresar del arbol recibe un arreglo de nodo_arbol con las hojas que son las comunas o sea desde la lista de comuna hay que formar por cada comuna una hoja con los datos que pide*/
+  Lista_comunas* comunas = new Lista_comunas();
+  Arbol* dual_tree = new Arbol();
+  nodo_arbol* hojas;
   leerComunas("comunas.txt", comunas);
   leerCasos("casos.txt",comunas);
   comunas->ordenar_latitud();
-  nodo_arbol* hojas= new nodo_arbol [comunas->get_tamano()];
+  hojas= new nodo_arbol [comunas->get_tamano()];
   formacion_hojas(comunas, hojas);
   dual_tree->insertar(hojas,comunas->get_tamano());
-  cout<<"Son: "<<comunas->get_cantidad_poblacion()<<endl;
+  //###############inicio test#####################################
+  cout<<"Son: "<<comunas->get_cantidad_poblacion()<<endl;//RF1
   cout<<"Me da: " <<dual_tree->get_raiz()->get_cantidad_poblacion()<<endl;
   cout<<dual_tree->get_raiz()->get_latitud1()<<endl;
   cout<<dual_tree->get_raiz()->get_latitud2()<<endl;
@@ -117,5 +130,6 @@ int main() {
   cout<<dual_tree->get_raiz()->get_longitud2()<<endl;
   cout<<"Son: "<<comunas->get_numero_casos()<<endl;
   cout<<"Me da: " <<dual_tree->get_raiz()->get_numero_casos()<<endl;
-  dual_tree->CasosConfirmados(7);
+  dual_tree->CasosConfirmados(7);// RF2
+  //#################fin test######################################
 }
